@@ -1,11 +1,12 @@
 import java.util.*; 
 
+// Test git
 public class Main {
 
 	public static void main(String[] args) {
 		final int minGH = 96; 
 		AllCourses allCourses = new AllCourses(); 
-		allCourses.readFile("allCourses.txt"); 
+		allCourses.readFile("allCourses.txt");
 		Map<Course, List<Course>> electiveGraph = allCourses.toAdjacencyList();
 		printGraph(electiveGraph);
 	}
