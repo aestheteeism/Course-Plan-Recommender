@@ -3,7 +3,7 @@ import java.util.*;
 public class Main {
 
 	public static void main(String[] args) {
-		final int minGH = 96;
+		final int minGH = 96; 
 		AllCourses allCourses = new AllCourses(); 
 		allCourses.readFile("allCourses.txt");
 		Map<Course, List<Course>> electiveGraph = allCourses.toAdjacencyList();
