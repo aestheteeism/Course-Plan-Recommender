@@ -4,8 +4,11 @@ public class Main {
 
 	public static void main(String[] args) {
 		final int minGH = 96; 
-		AllCourses allCourses = new AllCourses(); 
-		allCourses.readFile("allCourses.txt"); 
+		AllCourses allCourses = new AllCourses();
+		// specified path to run
+		allCourses.readFile("/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/allCourses.txt");
+		// relative path
+		allCourses.readFile("allCourses.txt");
 		Map<Course, List<Course>> electiveGraph = allCourses.toAdjacencyList();
 		printGraph(electiveGraph);
 	}
