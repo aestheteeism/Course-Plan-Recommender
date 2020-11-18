@@ -1,0 +1,5 @@
+1	BIO 101 Biotechnology: Coming of Age in the 21st Century	3	1	-5	false
+2	BIO 115 Biological Concepts: Ecology, Evolution, Genetics, and Diversity	4	3	5	false
+3	BIO 116 Biological Concepts: Structure, Function, Cellular, and Molecular Biology	4	3	5	false
+4	BIO 161 Principles of Human Physiology	4	2	0	false
+5	MBI 111 Microorganisms and Human Disease	3	1	0	false
