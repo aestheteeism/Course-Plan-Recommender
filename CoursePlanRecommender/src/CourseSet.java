@@ -10,7 +10,7 @@ public class CourseSet {
 
 	public CourseSet(String path) {
 		allCourses = new ArrayList<Course>();
-		allElectives = new PriorityQueue<Course>(Comparator.comparingInt(o -> o.getNrt()));
+		allElectives = new PriorityQueue<Course>(Comparator.comparingInt(o -> -o.getNrt()));
 		readFile(path);
 	}
 
@@ -70,6 +70,7 @@ public class CourseSet {
 		for (Course course : allCourses) {
 			if (course.getName().equals(elective.getName())) {
 				course.setMandatory(true);
+				break;
 			}
 		}
 	}
