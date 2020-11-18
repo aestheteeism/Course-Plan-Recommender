@@ -8,8 +8,9 @@ public class Main {
 //		Map<Course, List<Course>> electiveGraph = allCourses.toAdjacencyList();
 //		printGraph(electiveGraph);
 
-		//String path = "/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/allCourses.txt";
-		String path = "majorCourses.txt";
+		String path = "/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/majorCourses.txt";
+//		String path = "majorCourses.txt";
+
 		CourseGraph majorGraph = new CourseGraph(path);
 
 		majorGraph.printGraph();
