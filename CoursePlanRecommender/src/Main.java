@@ -3,16 +3,14 @@ import java.util.*;
 public class Main {
 
 	public static void main(String[] args) {
-		final int minGH = 96; 
-		AllCourses allCourses = new AllCourses();
-		// specified path to run
-		allCourses.readFile("/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/allCourses.txt");
-		// relative path
-		allCourses.readFile("allCourses.txt");
+		final int minGH = 96;
+		CourseSet allCourses = new CourseSet("/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/allCourses.txt");
 		Map<Course, List<Course>> electiveGraph = allCourses.toAdjacencyList();
 		printGraph(electiveGraph);
+
+
 	}
-	
+
     static void printGraph(Map<Course, List<Course>> graph) { 
     	for (Map.Entry<Course, List<Course>> entry : graph.entrySet()) {
     	    Course key = entry.getKey();
@@ -24,6 +22,5 @@ public class Main {
     	    }
     	    System.out.println();
     	}
-    } 
-
+    }
 }
