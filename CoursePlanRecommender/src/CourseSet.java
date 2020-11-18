@@ -30,13 +30,13 @@ public class CourseSet {
 				course.setDifficulty(Integer.parseInt(data[3])); 
 				course.setNrt(Integer.parseInt(data[4]));
 				course.setMandatory(Boolean.parseBoolean(data[5])); 
-				ArrayList<Course> prereqs = new ArrayList<Course>(); 
+				ArrayList<Course> preReqs = new ArrayList<Course>();
 				if (data.length >= 6) {
 					for(int i = 6; i < data.length; i++) {
-						prereqs.add(getCourseByName(data[i])); 
+						preReqs.add(getCourseByName(data[i]));
 					}
 				}
-				course.setPrereqs(prereqs); 
+				course.setPreReqs(preReqs);
 				allCourses.add(course);
 				if (!course.isMandatory()) {
 					allElectives.add(course);
@@ -75,12 +75,16 @@ public class CourseSet {
 		}
 	}
 
-	public Map<Course, List<Course>> toAdjacencyList() {
-		Map<Course, List<Course>> adjList = new TreeMap<Course, List<Course>>();  
+	public Map<Course, List<Course>> toAdjacencyList(boolean mandatoryOnly) {
+		Map<Course, List<Course>> adjList = new TreeMap<Course, List<Course>>();
 		for (Course course : allCourses) {
+			if (mandatoryOnly && !course.isMandatory()) {
+				continue;
+			}
+
 			Course src = course;
 			List<Course> lst = new ArrayList<Course>();
-			ArrayList<Course> preReqs = course.getPrereqs();
+			ArrayList<Course> preReqs = course.getPreReqs();
 			for (Course preReq : preReqs) {
 				if(preReq != null) {
 					adjList.get(preReq).add(course);

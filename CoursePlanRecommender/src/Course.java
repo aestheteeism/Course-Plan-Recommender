@@ -7,13 +7,13 @@ public class Course implements Comparable<Course> {
 	private int difficulty; 
 	private int nrt; 
 	private boolean isMandatory; 
-	private ArrayList<Course> prereqs;
+	private ArrayList<Course> preReqs;
 
 
 	public Course() {}
 
 	public Course(int id, String name, int creditHour, int difficulty, int nrt, boolean isMandatory,
-			ArrayList<Course> prereqs) {
+			ArrayList<Course> preReqs) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -21,7 +21,7 @@ public class Course implements Comparable<Course> {
 		this.difficulty = difficulty;
 		this.nrt = nrt;
 		this.isMandatory = isMandatory;
-		this.prereqs = prereqs;
+		this.preReqs = preReqs;
 	}
 
 
@@ -76,12 +76,12 @@ public class Course implements Comparable<Course> {
 		this.isMandatory = isMandatory;
 	}
 
-	public ArrayList<Course> getPrereqs() {
-		return prereqs;
+	public ArrayList<Course> getPreReqs() {
+		return preReqs;
 	}
 
-	public void setPrereqs(ArrayList<Course> prereqs) {
-		this.prereqs = prereqs;
+	public void setPreReqs(ArrayList<Course> preReqs) {
+		this.preReqs = preReqs;
 	}
 
 	@Override

@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class CourseGraph {
     private Map<Course, List<Course>> graph;
@@ -13,7 +10,7 @@ public class CourseGraph {
     // Constructor
     public CourseGraph(String path) {
         this.courseSet = new CourseSet(path);
-        this.graph = courseSet.toAdjacencyList();
+        this.graph = courseSet.toAdjacencyList(false);
         this.allElectives = courseSet.getElectives();
         this.allCourses = courseSet.getAllCourses();
     }
@@ -21,7 +18,7 @@ public class CourseGraph {
     // Copy Constructor
     public CourseGraph(CourseGraph copiedGraph) {
         courseSet = copiedGraph.getAllCourses();
-        this.graph = courseSet.toAdjacencyList();
+        this.graph = courseSet.toAdjacencyList(false);
         this.allElectives = courseSet.getElectives();
     }
 
@@ -44,7 +41,8 @@ public class CourseGraph {
                 electiveHours += bestCourse.getCreditHour();
             }
         }
-        graph = courseSet.toAdjacencyList();
+        // Update the graph with selected electives
+        graph = courseSet.toAdjacencyList(true);
     }
 
     private Course selectBest(PriorityQueue<Course> allElectives) {
@@ -68,24 +66,32 @@ public class CourseGraph {
     /**--- END OF ALGORITHM 1 ---**/
 
 
+    /**--- ALGORITHM 2 ---**/
+
+    public void selectCourses() {
+        Map<Course, Integer> indegree = getIndegree();
+        int termCount = 0;
+        Queue<Course> headQueue = new LinkedList<>();
+        PriorityQueue sameLevelCourses =  new PriorityQueue<Course>(Comparator.comparingInt(o -> -getImportance(o)));
+    }
+
+    private int getImportance(Course course) {
+        // Number of post-requisites - number of pre-requisites
+        return fullLength(graph.get(course), false) - fullLength(course.getPreReqs(), true);
+    }
+
+    private int fullLength(List<Course> requisites, boolean isPreReq) {
+        int length = requisites.size();
+        for (Course course : requisites) {
+            if (isPreReq) length += fullLength(course.getPreReqs(), true);
+            else length += fullLength(graph.get(course), false);
+        }
+        return length;
+    }
+
+
 //    public void topologicalSort() {
-//        // Create a array to store
-//        // indegrees of all
-//        // vertices. Initialize all
-//        // indegrees as 0.
-//        int indegree[] = new int[V];
-//
-//        // Traverse adjacency lists
-//        // to fill indegrees of
-//        // vertices. This step takes
-//        // O(V+E) time
-//        for (int i = 0; i < V; i++) {
-//            ArrayList<Integer> temp
-//                    = (ArrayList<Integer>)adj[i];
-//            for (int node : temp) {
-//                indegree[node]++;
-//            }
-//        }
+
 //
 //        // Create a queue and enqueue
 //        // all vertices with indegree 0
@@ -138,14 +144,27 @@ public class CourseGraph {
 
 
 
+    public Map<Course, Integer> getIndegree() {
+        Map<Course, Integer> indegree = new HashMap<>();
+        for (Map.Entry<Course, List<Course>> entry : graph.entrySet()) {
+            for(Course course : entry.getValue()) {
+                if (!indegree.keySet().contains(course)) {
+                    indegree.put(course, 0);
+                } else {
+                    indegree.replace(course, indegree.get(course) + 1);
+                }
+            }
+        }
+        return indegree;
+    }
+
     // Print Graph
     public void printGraph() {
         int count = 0;
         for (Map.Entry<Course, List<Course>> entry : graph.entrySet()) {
             Course key = entry.getKey();
-            if (key.isMandatory()) {
-                count++;
-            }
+            count++;
+
             List<Course> value = entry.getValue();
             System.out.println("\nAdjacency list of vertex " + key.getName());
             System.out.print("head");
