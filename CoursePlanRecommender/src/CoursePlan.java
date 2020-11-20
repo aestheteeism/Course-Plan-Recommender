@@ -20,7 +20,7 @@ public class CoursePlan {
 
     // Copy Constructor
     public CoursePlan(CourseGraph copiedGraph) {
-        courseSet = copiedGraph.getAllCourses();
+        courseSet = copiedGraph.getCourseSet();
         this.graph = courseSet.toAdjacencyList(false);
         this.allElectives = courseSet.getElectives();
     }

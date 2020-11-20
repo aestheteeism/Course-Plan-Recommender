@@ -17,14 +17,18 @@ public class CourseGraph {
 
     // Copy Constructor
     public CourseGraph(CourseGraph copiedGraph) {
-        courseSet = copiedGraph.getAllCourses();
+        courseSet = copiedGraph.getCourseSet();
         this.graph = courseSet.toAdjacencyList(false);
         this.allElectives = courseSet.getElectives();
         this.allCourses = courseSet.getAllCourses();
     }
 
-    public CourseSet getAllCourses() {
+    public CourseSet getCourseSet() {
         return courseSet;
+    }
+
+    public ArrayList<Course> getAllCourses() {
+        return allCourses;
     }
 
     public Map<Course, List<Course>> getAdjList() {
