@@ -15,7 +15,7 @@ public class CourseSet {
 			public int compare(Course c1, Course c2) {
 				int compare = Integer.compare(c2.getNrt(), c1.getNrt());
 				if (compare == 0) {
-					compare = Integer.compare(c2.getDifficulty(), c1.getDifficulty());
+					compare = Integer.compare(c1.getDifficulty(), c2.getDifficulty());
 				}
 				return compare;				
 			}

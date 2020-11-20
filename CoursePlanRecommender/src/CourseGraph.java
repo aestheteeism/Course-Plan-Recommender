@@ -36,8 +36,9 @@ public class CourseGraph {
     public void addElectives() {
         while (electiveHours < 21) {
             if (!allElectives.isEmpty()) {
+                //System.out.println("PriQ is" + allElectives);
                 Course bestCourse = allElectives.poll();
-                System.out.println("Best Course is " + bestCourse);
+                //System.out.println("Best Course is " + bestCourse);
                 courseSet.setAsMandatory(bestCourse);
                 electiveHours += bestCourse.getCreditHour();
             }
