@@ -36,31 +36,14 @@ public class CourseGraph {
     public void addElectives() {
         while (electiveHours < 21) {
             if (!allElectives.isEmpty()) {
-                Course bestCourse = selectBest(allElectives);
+                Course bestCourse = allElectives.poll();
+                System.out.println("Best Course is " + bestCourse);
                 courseSet.setAsMandatory(bestCourse);
                 electiveHours += bestCourse.getCreditHour();
             }
         }
         // Update the graph with selected electives
         graph = courseSet.toAdjacencyList(true);
-    }
-
-    private Course selectBest(PriorityQueue<Course> allElectives) {
-        Course bestCourse = allElectives.peek();
-        if (bestCourse.getNrt() == 0) {
-            int minDif = Integer.MAX_VALUE;
-            for (Course course : allElectives) {
-                if (course.getNrt() == 0 && course.getDifficulty() < minDif) {
-                    minDif = course.getNrt();
-                    bestCourse = course;
-                }
-            }
-            // Put the bestCourse on top of the queue
-            bestCourse.setNrt(6);
-        }
-
-        bestCourse = allElectives.poll();
-        return bestCourse;
     }
 
     /**--- END OF ALGORITHM 1 ---**/
