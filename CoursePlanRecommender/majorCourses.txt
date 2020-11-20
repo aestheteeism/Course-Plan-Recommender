@@ -7,36 +7,36 @@
 7	CEC 101 Computing, Engineering & Society	1	1	0	true
 8	CSE 102 Introduction to Computer Science and Software Engineering	3	1	3	true
 9	CSE 174 Fundamentals of Programming and Problem Solving	3	2	5	true	MTH 151
-10	CSE 201 Introduction to Software Engineering	3	3	4	true	CSE 274
-11	CSE 262 Technology, Ethics, and Global Society	3	3	0	true
-12	CSE 271 Object Oriented Programming	3	3	4	true	CSE 174
-13	CSE 274 Data Abstraction and Data Structures	3	3	4	true	CSE 271
+10	CSE 262 Technology, Ethics, and Global Society	3	3	0	true
+11	CSE 271 Object Oriented Programming	3	3	4	true	CSE 174
+12	CSE 274 Data Abstraction and Data Structures	3	3	4	true	CSE 271
+13	CSE 201 Introduction to Software Engineering	3	3	4	true	CSE 274
 14	CSE 278 Systems I	3	2	3	true	CSE 271	CSE 102
 15	CSE 374 Algorithms I	3	4	4	true	CSE 274	MTH 231
 16	CSE 381 Systems II	3	3	3	true	CSE 278
 17	CSE 383 Web Application Programming	3	3	4	true	CSE 278
 18	CSE 448 Senior Design Project	2	4	4	true	CSE 201	CSE 274
 19	CSE 449 Senior Design Project	2	4	4	true	CSE 448
-20	CSE 465 Comparative Programming Languages	3	4	3	false	CSE 274
+20	CSE 465 Comparative Programming Languages	3	4	3	true	CSE 274
 21	CSE 385 Database Systems	3	3	4	false	CSE 274
-22	CSE 386 Foundations of Computer Graphics and Games	3	3	4	false	MTH 151	CSE 274
+22	CSE 386 Foundations of Computer Graphics and Games	3	3	2	false	MTH 151	CSE 274
 23	CSE 389 Game Design and Implementation	3	3	2	false	CSE 386
 24	CSE 432 Machine Learning	3	4	4	false	CSE 274
 25	CSE 443 High Performance Computing & Parallel Programming	3	4	2	false	CSE 381
 26	CSE 451 Web Services and Service Oriented Architectures	3	4	3	false	CSE 383
-27	CSE 466 Bioinformatics Computing Skills	3	4	1	false	CSE 174
+27	CSE 466 Bioinformatics Computing Skills	3	4	-5	false	CSE 174
 28	CSE 467 Computer and Network Security	3	4	3	false	CSE 383
-29	CSE 471 Simulation	3	4	2	false	CSE 174
-30	CSE 473 Automata, Formal Languages, and Computability	3	4	2	false	CSE 274	MTH 231
+29	CSE 471 Simulation	3	4	-1	false	CSE 174
+30	CSE 473 Automata, Formal Languages, and Computability	3	4	0	false	CSE 274	MTH 231
 31	CSE 474 Compiler Design	3	4	3	false	CSE 274
 32	CSE 484 Algorithms II	3	4	4	false	CSE 374
-33	CSE 486 Introduction to Artificial Intelligence	3	4	4	false	CSE 274	MTH 231
-34	CSE 488 Image Processing & Computer Vision	3	4	2	false	CSE 274	MTH 231
-35	CSE 489 Advanced Graphics and Game Engine Design	3	4	2	false	CSE 386
+33	CSE 486 Introduction to Artificial Intelligence	3	4	5	false	CSE 274	MTH 231
+34	CSE 488 Image Processing & Computer Vision	3	4	0	false	CSE 274	MTH 231
+35	CSE 489 Advanced Graphics and Game Engine Design	-3	4	2	false	CSE 386
 36	CSE 211 Software Construction	3	3	0	false	CSE 201	CSE 274	MTH 231
 37	CSE 212 Software Engineering for User Interface and User Experience Design	3	4	0	false	CSE 271
-38	CSE 311 Software Architecture and Design	3	3	2	false	CSE 201
+38	CSE 311 Software Architecture and Design	3	3	-2	false	CSE 201
 39	CSE 321 Software Quality Assurance and Testing	3	3	0	false	CSE 201
-40	CSE 322 Software Requirements	3	3	0	false	CSE 201
-41	CSE 372 Stochastic Modeling	3	3	0	false	CSE 201
-42	ISA 414 Managing Big Data	3	3	2	false	CSE 385
+40	CSE 322 Software Requirements	3	3	-5	false	CSE 201
+41	CSE 372 Stochastic Modeling	3	3	-4	false	CSE 201
+42	ISA 414 Managing Big Data	3	3	1	false	CSE 385
