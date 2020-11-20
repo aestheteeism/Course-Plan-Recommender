@@ -10,7 +10,7 @@ public class CourseSet {
 
 	public CourseSet(String path) {
 		allCourses = new ArrayList<Course>();
-		allElectives = new PriorityQueue<Course>(Comparator.comparingInt(o -> -o.getNrt()));
+		allElectives = new PriorityQueue<Course>(Comparator.comparingInt(o -> -(o.getNrt() - o.getDifficulty()/5)));
 		readFile(path);
 	}
 

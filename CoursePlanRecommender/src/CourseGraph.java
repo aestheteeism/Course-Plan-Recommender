@@ -20,11 +20,17 @@ public class CourseGraph {
         courseSet = copiedGraph.getAllCourses();
         this.graph = courseSet.toAdjacencyList(false);
         this.allElectives = courseSet.getElectives();
+        this.allCourses = courseSet.getAllCourses();
     }
 
     public CourseSet getAllCourses() {
         return courseSet;
     }
+
+    public Map<Course, List<Course>> getAdjList() {
+        return graph;
+    }
+
 
     // Function to add an edge to graph
     public void addEdge(Course u, Course v) {
@@ -36,7 +42,7 @@ public class CourseGraph {
     public void addElectives() {
         while (electiveHours < 21) {
             if (!allElectives.isEmpty()) {
-                Course bestCourse = selectBest(allElectives);
+                Course bestCourse = allElectives.poll();
                 courseSet.setAsMandatory(bestCourse);
                 electiveHours += bestCourse.getCreditHour();
             }
@@ -51,7 +57,7 @@ public class CourseGraph {
             int minDif = Integer.MAX_VALUE;
             for (Course course : allElectives) {
                 if (course.getNrt() == 0 && course.getDifficulty() < minDif) {
-                    minDif = course.getNrt();
+                    minDif = course.getDifficulty();
                     bestCourse = course;
                 }
             }
@@ -69,10 +75,12 @@ public class CourseGraph {
     /**--- ALGORITHM 2 ---**/
 
     public void selectCourses() {
-        Map<Course, Integer> indegree = getIndegree();
         int termCount = 0;
         Queue<Course> headQueue = new LinkedList<>();
         PriorityQueue sameLevelCourses =  new PriorityQueue<Course>(Comparator.comparingInt(o -> -getImportance(o)));
+        CourseGraph sortingGraph = new CourseGraph(this);
+        Map<Course, Integer> indegreeList = getIndegree(sortingGraph);
+        ArrayList<Course> startingNodes = getStartingNodes(sortingGraph);
     }
 
     private int getImportance(Course course) {
@@ -87,6 +95,19 @@ public class CourseGraph {
             else length += fullLength(graph.get(course), false);
         }
         return length;
+    }
+
+    public ArrayList<Course> getStartingNodes(CourseGraph courseGraph) {
+        ArrayList<Course> startingNodes = new ArrayList<>();
+        Map<Course, Integer> indegreeList = getIndegree(courseGraph);
+
+        for (Course course : indegreeList.keySet()) {
+            if (indegreeList.get(course) == 0) {
+                startingNodes.add(course);
+            }
+        }
+
+        return startingNodes;
     }
 
 
@@ -144,9 +165,11 @@ public class CourseGraph {
 
 
 
-    public Map<Course, Integer> getIndegree() {
+    public Map<Course, Integer> getIndegree(CourseGraph courseGraph) {
         Map<Course, Integer> indegree = new HashMap<>();
-        for (Map.Entry<Course, List<Course>> entry : graph.entrySet()) {
+        Map<Course, List<Course>> adjList = courseGraph.getAdjList();
+
+        for (Map.Entry<Course, List<Course>> entry : adjList.entrySet()) {
             for(Course course : entry.getValue()) {
                 if (!indegree.keySet().contains(course)) {
                     indegree.put(course, 0);
@@ -155,8 +178,11 @@ public class CourseGraph {
                 }
             }
         }
+
         return indegree;
     }
+
+    /**--- END OF ALGORITHM 2 ---**/
 
     // Print Graph
     public void printGraph() {
@@ -172,6 +198,17 @@ public class CourseGraph {
                 System.out.print(" -> " + c.getName());
             }
             System.out.println();
+        }
+        System.out.println(count);
+    }
+
+    // Print Selected Courses
+    public void printMandatory() {
+        int count = 0;
+        for (Map.Entry<Course, List<Course>> entry : graph.entrySet()) {
+            Course key = entry.getKey();
+            count++;
+            System.out.println(key.getName());
         }
         System.out.println(count);
     }
