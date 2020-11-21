@@ -92,9 +92,9 @@ public class CourseGraph {
         int termCount = 0;
         Queue<Course> headQueue = new LinkedList<>();
         PriorityQueue<Course> sameLevelCourses =  new PriorityQueue<Course>(Comparator.comparingInt(o -> -getImportance(o)));
-        CourseGraph sortingGraph = new CourseGraph(this);
-        Map<Course, Integer> indegreeList = getIndegree(sortingGraph);
-        ArrayList<Course> startingNodes = getStartingNodes(sortingGraph);
+//        CourseGraph sortingGraph = new CourseGraph(this);
+        Map<Course, Integer> indegreeList = getIndegree(this);
+        ArrayList<Course> startingNodes = getStartingNodes(this);
 
         for (Course course : startingNodes) {
             sameLevelCourses.add(course);
@@ -110,24 +110,27 @@ public class CourseGraph {
             Course course = headQueue.poll();
 
             if (course == null) {
-                termCount += 2;
+                termCount += 1;
+                if (termCount >= 8) {
+                    break;
+                }
                 headQueue.add(null);
             } else {
                 coursePlan.addMajorCourse(course, termCount);
-            }
 
-            List<Course> adjacentCourses = sortingGraph.getAdjList().get(course);
-            sortingGraph.clearEdges(course);
-            for (Course nextCourse : adjacentCourses) {
-                indegreeList.put(nextCourse, indegreeList.get(nextCourse) - 1);
-                if (indegreeList.get(nextCourse) == 0) {
-                    sameLevelCourses.add(nextCourse);
+                List<Course> adjacentCourses = majorGraph.get(course);
+    //            sortingGraph.clearEdges(course);
+                for (Course nextCourse : adjacentCourses) {
+                    indegreeList.put(nextCourse, indegreeList.get(nextCourse) - 1);
+                    if (indegreeList.get(nextCourse) == 0) {
+                        sameLevelCourses.add(nextCourse);
+                    }
                 }
-            }
 
-            while (!sameLevelCourses.isEmpty()) {
-                course = sameLevelCourses.poll();
-                headQueue.add(course);
+                while (!sameLevelCourses.isEmpty()) {
+                    course = sameLevelCourses.poll();
+                    headQueue.add(course);
+                }
             }
         }
 
@@ -135,15 +138,15 @@ public class CourseGraph {
 
     public Map<Course, Integer> getIndegree(CourseGraph courseGraph) {
         Map<Course, Integer> indegree = new HashMap<>();
-        Map<Course, List<Course>> adjList = courseGraph.getAdjList();
+//        Map<Course, List<Course>> adjList = courseGraph.getAdjList();
 
-        for (Map.Entry<Course, List<Course>> entry : adjList.entrySet()) {
+        for (Map.Entry<Course, List<Course>> entry : majorGraph.entrySet()) {
+            Course course = entry.getKey();
+            indegree.put(course, 0);
+        }
+        for (Map.Entry<Course, List<Course>> entry : majorGraph.entrySet()) {
             for(Course course : entry.getValue()) {
-                if (!indegree.keySet().contains(course)) {
-                    indegree.put(course, 0);
-                } else {
-                    indegree.replace(course, indegree.get(course) + 1);
-                }
+                indegree.replace(course, indegree.get(course) + 1);
             }
         }
 

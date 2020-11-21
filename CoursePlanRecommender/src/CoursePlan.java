@@ -8,7 +8,7 @@ public class CoursePlan {
 
     // Constructor
     public CoursePlan() {
-        this.coursePlan = new Term[16];
+        this.coursePlan = new Term[8];
         for (int i = 0; i < coursePlan.length; i++) {
             coursePlan[i] = new Term();
         }
@@ -16,10 +16,10 @@ public class CoursePlan {
 
     public void addMajorCourse(Course course, int termCount) {
         if (!course.isPicked()) {
-            for (int i = termCount; i < coursePlan.length; i += 2) {
+            for (int i = termCount; i < coursePlan.length; i++) {
                 Term term = coursePlan[i];
                 if (term.getCreditHours() + course.getCreditHour() <= term.getMaxCreHours()
-                        && term.getDifficulty() + course.getDifficulty() <= term.getMaxDiff()) {
+                        && term.getDifficulty() + course.getDifficulty() <= term.getMaxDiff() - 3) {
                     term.addCourse(course);
                     term.updateCreditHours(course.getCreditHour());
                     term.updateDifficulty(course.getDifficulty());
@@ -35,9 +35,8 @@ public class CoursePlan {
 
         for (int i = 0; i < coursePlan.length; i++) {
             Term term = coursePlan[i];
-            System.out.printf("Term &.2d:", i + 1);
+            System.out.printf("Term %-2d: ", i + 1);
             term.printCourses();
-            System.out.println();
         }
     }
 
