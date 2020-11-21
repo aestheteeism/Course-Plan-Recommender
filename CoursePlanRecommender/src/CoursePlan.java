@@ -4,24 +4,41 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 public class CoursePlan {
-    private Map<Course, List<Course>> graph;
-    private PriorityQueue<Course> allElectives;
-    private ArrayList<Course> allCourses;
-    private CourseSet courseSet;
-    int electiveHours = 0;
+    private Term[] coursePlan;
 
     // Constructor
-    public CoursePlan(String path) {
-        this.courseSet = new CourseSet(path);
-        this.graph = courseSet.toAdjacencyList(false);
-        this.allElectives = courseSet.getElectives();
-        this.allCourses = courseSet.getAllCourses();
+    public CoursePlan() {
+        this.coursePlan = new Term[16];
+        for (int i = 0; i < coursePlan.length; i++) {
+            coursePlan[i] = new Term();
+        }
     }
 
-    // Copy Constructor
-    public CoursePlan(CourseGraph copiedGraph) {
-        courseSet = copiedGraph.getCourseSet();
-        this.graph = courseSet.toAdjacencyList(false);
-        this.allElectives = courseSet.getElectives();
+    public void addMajorCourse(Course course, int termCount) {
+        if (!course.isPicked()) {
+            for (int i = termCount; i < coursePlan.length; i += 2) {
+                Term term = coursePlan[i];
+                if (term.getCreditHours() + course.getCreditHour() <= term.getMaxCreHours()
+                        && term.getDifficulty() + course.getDifficulty() <= term.getMaxDiff()) {
+                    term.addCourse(course);
+                    term.updateCreditHours(course.getCreditHour());
+                    term.updateDifficulty(course.getDifficulty());
+                    course.setIsPicked(true);
+                    break;
+                }
+            }
+        }
     }
+
+    public void printCoursePlan() {
+        System.out.println("COURSE PLAN:");
+
+        for (int i = 0; i < coursePlan.length; i++) {
+            Term term = coursePlan[i];
+            System.out.printf("Term &.2d:", i + 1);
+            term.printCourses();
+            System.out.println();
+        }
+    }
+
 }

@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class CourseGraph {
-    private Map<Course, List<Course>> graph;
+    private Map<Course, List<Course>> majorGraph;
     private PriorityQueue<Course> allElectives;
     private ArrayList<Course> allCourses;
     private CourseSet courseSet;
@@ -10,7 +10,7 @@ public class CourseGraph {
     // Constructor
     public CourseGraph(String path) {
         this.courseSet = new CourseSet(path);
-        this.graph = courseSet.toAdjacencyList(false);
+        this.majorGraph = courseSet.toAdjacencyList(false);
         this.allElectives = courseSet.getElectives();
         this.allCourses = courseSet.getAllCourses();
     }
@@ -18,7 +18,7 @@ public class CourseGraph {
     // Copy Constructor
     public CourseGraph(CourseGraph copiedGraph) {
         courseSet = copiedGraph.getCourseSet();
-        this.graph = courseSet.toAdjacencyList(false);
+        this.majorGraph = courseSet.toAdjacencyList(false);
         this.allElectives = courseSet.getElectives();
         this.allCourses = courseSet.getAllCourses();
     }
@@ -32,14 +32,24 @@ public class CourseGraph {
     }
 
     public Map<Course, List<Course>> getAdjList() {
-        return graph;
+        return majorGraph;
     }
-
 
     // Function to add an edge to graph
     public void addEdge(Course u, Course v) {
-        graph.get(u).add(v);
+        majorGraph.get(u).add(v);
     }
+
+    // Function to delete an edge to graph
+    public void deleteEdge(Course u, Course v) {
+        majorGraph.get(u).remove(v);
+    }
+
+    // Function to clear all edges of a node
+    public void clearEdges(Course u) {
+        majorGraph.put(u, new ArrayList<Course>());
+    }
+
 
     /**--- ALGORITHM 1 ---**/
 
@@ -52,7 +62,7 @@ public class CourseGraph {
             }
         }
         // Update the graph with selected electives
-        graph = courseSet.toAdjacencyList(true);
+        majorGraph = courseSet.toAdjacencyList(true);
     }
 
     private Course selectBest(PriorityQueue<Course> allElectives) {
@@ -78,96 +88,50 @@ public class CourseGraph {
 
     /**--- ALGORITHM 2 ---**/
 
-    public void selectCourses() {
+    public void selectCourses(CoursePlan coursePlan) {
         int termCount = 0;
         Queue<Course> headQueue = new LinkedList<>();
-        PriorityQueue sameLevelCourses =  new PriorityQueue<Course>(Comparator.comparingInt(o -> -getImportance(o)));
+        PriorityQueue<Course> sameLevelCourses =  new PriorityQueue<Course>(Comparator.comparingInt(o -> -getImportance(o)));
         CourseGraph sortingGraph = new CourseGraph(this);
         Map<Course, Integer> indegreeList = getIndegree(sortingGraph);
         ArrayList<Course> startingNodes = getStartingNodes(sortingGraph);
-    }
 
-    private int getImportance(Course course) {
-        // Number of post-requisites - number of pre-requisites
-        return fullLength(graph.get(course), false) - fullLength(course.getPreReqs(), true);
-    }
-
-    private int fullLength(List<Course> requisites, boolean isPreReq) {
-        int length = requisites.size();
-        for (Course course : requisites) {
-            if (isPreReq) length += fullLength(course.getPreReqs(), true);
-            else length += fullLength(graph.get(course), false);
+        for (Course course : startingNodes) {
+            sameLevelCourses.add(course);
         }
-        return length;
-    }
 
-    public ArrayList<Course> getStartingNodes(CourseGraph courseGraph) {
-        ArrayList<Course> startingNodes = new ArrayList<>();
-        Map<Course, Integer> indegreeList = getIndegree(courseGraph);
+        while (!sameLevelCourses.isEmpty()) {
+            Course course = sameLevelCourses.poll();
+            headQueue.add(course);
+        }
 
-        for (Course course : indegreeList.keySet()) {
-            if (indegreeList.get(course) == 0) {
-                startingNodes.add(course);
+        headQueue.add(null);
+        while (!headQueue.isEmpty()) {
+            Course course = headQueue.poll();
+
+            if (course == null) {
+                termCount += 2;
+                headQueue.add(null);
+            } else {
+                coursePlan.addMajorCourse(course, termCount);
+            }
+
+            List<Course> adjacentCourses = sortingGraph.getAdjList().get(course);
+            sortingGraph.clearEdges(course);
+            for (Course nextCourse : adjacentCourses) {
+                indegreeList.put(nextCourse, indegreeList.get(nextCourse) - 1);
+                if (indegreeList.get(nextCourse) == 0) {
+                    sameLevelCourses.add(nextCourse);
+                }
+            }
+
+            while (!sameLevelCourses.isEmpty()) {
+                course = sameLevelCourses.poll();
+                headQueue.add(course);
             }
         }
 
-        return startingNodes;
     }
-
-
-//    public void topologicalSort() {
-
-//
-//        // Create a queue and enqueue
-//        // all vertices with indegree 0
-//        Queue<Integer> q
-//                = new LinkedList<Integer>();
-//        for (int i = 0; i < V; i++) {
-//            if (indegree[i] == 0)
-//                q.add(i);
-//        }
-//
-//        // Initialize count of visited vertices
-//        int cnt = 0;
-//
-//        // Create a vector to store result
-//        // (A topological ordering of the vertices)
-//        Vector<Integer> topOrder = new Vector<Integer>();
-//        while (!q.isEmpty()) {
-//            // Extract front of queue
-//            // (or perform dequeue)
-//            // and add it to topological order
-//            int u = q.poll();
-//            topOrder.add(u);
-//
-//            // Iterate through all its
-//            // neighbouring nodes
-//            // of dequeued node u and
-//            // decrease their in-degree
-//            // by 1
-//            for (int node : adj[u]) {
-//                // If in-degree becomes zero,
-//                // add it to queue
-//                if (--indegree[node] == 0)
-//                    q.add(node);
-//            }
-//            cnt++;
-//        }
-//
-//        // Check if there was a cycle
-//        if (cnt != V) {
-//            System.out.println(
-//                    "There exists a cycle in the graph");
-//            return;
-//        }
-//
-//        // Print topological order
-//        for (int i : topOrder) {
-//            System.out.print(i + " ");
-//        }
-//    }
-
-
 
     public Map<Course, Integer> getIndegree(CourseGraph courseGraph) {
         Map<Course, Integer> indegree = new HashMap<>();
@@ -186,12 +150,43 @@ public class CourseGraph {
         return indegree;
     }
 
+    public ArrayList<Course> getStartingNodes(CourseGraph courseGraph) {
+        ArrayList<Course> startingNodes = new ArrayList<>();
+        Map<Course, Integer> indegreeList = getIndegree(courseGraph);
+
+        for (Course course : indegreeList.keySet()) {
+            if (indegreeList.get(course) == 0) {
+                startingNodes.add(course);
+            }
+        }
+
+        return startingNodes;
+    }
+
+    private int getImportance(Course course) {
+        // Number of post-requisites - number of pre-requisites
+        return fullLength(majorGraph.get(course), false) - fullLength(course.getPreReqs(), true);
+    }
+
+    private int fullLength(List<Course> requisites, boolean isPreReq) {
+        if (requisites == null) {
+            return 0;
+        } else {
+            int length = requisites.size();
+            for (Course course : requisites) {
+                if (isPreReq) length += fullLength(course.getPreReqs(), true);
+                else length += fullLength(majorGraph.get(course), false);
+            }
+            return length;
+        }
+    }
+
     /**--- END OF ALGORITHM 2 ---**/
 
     // Print Graph
     public void printGraph() {
         int count = 0;
-        for (Map.Entry<Course, List<Course>> entry : graph.entrySet()) {
+        for (Map.Entry<Course, List<Course>> entry : majorGraph.entrySet()) {
             Course key = entry.getKey();
             count++;
 
@@ -209,11 +204,14 @@ public class CourseGraph {
     // Print Selected Courses
     public void printMandatory() {
         int count = 0;
-        for (Map.Entry<Course, List<Course>> entry : graph.entrySet()) {
+        for (Map.Entry<Course, List<Course>> entry : majorGraph.entrySet()) {
             Course key = entry.getKey();
-            count++;
-            System.out.println(key.getName());
+            if (key.isMandatory()) {
+                count++;
+                System.out.println(key.getName());
+            }
         }
-        System.out.println(count);
+        System.out.printf("In total: %d courses\n", count);
+        System.out.println("=============================\n");
     }
 }
