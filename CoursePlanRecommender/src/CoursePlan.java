@@ -14,6 +14,8 @@ public class CoursePlan {
         }
     }
 
+    /**--- PART  ALGORITHM 2 ---**/
+
     public void addMajorCourse(Course course, int termCount) {
         if (!course.isPicked()) {
             for (int i = termCount; i < coursePlan.length; i++) {
@@ -29,6 +31,8 @@ public class CoursePlan {
             }
         }
     }
+
+    /**--- END OF PART OF ALGORITHM 2 ---**/
 
     public void printCoursePlan() {
         System.out.println("COURSE PLAN:");

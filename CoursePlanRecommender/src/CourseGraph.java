@@ -5,7 +5,6 @@ public class CourseGraph {
     private PriorityQueue<Course> allElectives;
     private ArrayList<Course> allCourses;
     private CourseSet courseSet;
-    int electiveHours = 0;
 
     // Constructor
     public CourseGraph(String path) {
@@ -54,33 +53,16 @@ public class CourseGraph {
     /**--- ALGORITHM 1 ---**/
 
     public void addElectives() {
+        int electiveHours = 0;
         while (electiveHours < 21) {
             if (!allElectives.isEmpty()) {
                 Course bestCourse = allElectives.poll();
-                courseSet.setAsMandatory(bestCourse);
+                bestCourse.setMandatory(true);
                 electiveHours += bestCourse.getCreditHour();
             }
         }
         // Update the graph with selected electives
         majorGraph = courseSet.toAdjacencyList(true);
-    }
-
-    private Course selectBest(PriorityQueue<Course> allElectives) {
-        Course bestCourse = allElectives.peek();
-        if (bestCourse.getNrt() == 0) {
-            int minDif = Integer.MAX_VALUE;
-            for (Course course : allElectives) {
-                if (course.getNrt() == 0 && course.getDifficulty() < minDif) {
-                    minDif = course.getDifficulty();
-                    bestCourse = course;
-                }
-            }
-            // Put the bestCourse on top of the queue
-            bestCourse.setNrt(6);
-        }
-
-        bestCourse = allElectives.poll();
-        return bestCourse;
     }
 
     /**--- END OF ALGORITHM 1 ---**/
@@ -185,6 +167,10 @@ public class CourseGraph {
     }
 
     /**--- END OF ALGORITHM 2 ---**/
+
+    /**--- ALGORITHM 3 ---**/
+
+    /**--- END OF ALGORITHM 3 ---**/
 
     // Print Graph
     public void printGraph() {
