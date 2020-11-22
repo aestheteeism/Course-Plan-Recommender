@@ -83,7 +83,17 @@ public class CourseGraph {
     public void selectCourses(CoursePlan coursePlan) {
         int termCount = 0;
         Queue<Course> headQueue = new LinkedList<>();
-        PriorityQueue<Course> sameLevelCourses =  new PriorityQueue<Course>(Comparator.comparingInt(o -> -getImportance(o)));
+//        PriorityQueue<Course> sameLevelCourses = new PriorityQueue<Course>(Comparator.comparingInt(o -> -2*getImportance(o) + Integer.parseInt(o.getName().substring(4,5))));
+        PriorityQueue<Course> sameLevelCourses = new PriorityQueue<Course>(new Comparator<Course>() {
+            @Override
+            public int compare(Course c1, Course c2) {
+                int compare = Integer.compare(getImportance(c2), getImportance(c1));
+                if (compare == 0) {
+                    compare = Double.compare(Integer.parseInt(c1.getName().substring(4,5))/100.0, Integer.parseInt(c2.getName().substring(4,5))/100.0);
+                }
+                return compare;
+            }
+        });
 //        CourseGraph sortingGraph = new CourseGraph(this);
         Map<Course, Integer> indegreeList = getIndegree(this);
         ArrayList<Course> startingNodes = getStartingNodes(this);
@@ -177,6 +187,14 @@ public class CourseGraph {
         return length;
     }
 
+    public void printImportance() {
+        for (Course course : majorGraph.keySet()) {
+            System.out.println(course.getName().substring(0, 7));
+            System.out.println(fullLength(course.getPreReqs(), true));
+            System.out.println(fullLength(majorGraph.get(course), false));
+        }
+    }
+
     /**--- END OF ALGORITHM 2 ---**/
 
 
@@ -202,8 +220,8 @@ public class CourseGraph {
         foundations.put("IIB", 3);
         foundations.put("IIC", 3);
         foundations.put("III", 6);
-        foundations.put("IVA", 4);
-        foundations.put("IVB", 6);
+        foundations.put("IVA", 5);
+        foundations.put("IVB", 5);
         foundations.put("V", 3);
 
         return foundations;

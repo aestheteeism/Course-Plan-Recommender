@@ -9,7 +9,7 @@ public class Term {
     private int maxDiff;
 
     public Term() {
-        this(0, 12, 20, 0, 16);
+        this(0, 12, 20, 0, 15);
     }
 
     public Term(int creditHours, int minCreHours, int maxCreHours, int difficulty, int maxDiff) {

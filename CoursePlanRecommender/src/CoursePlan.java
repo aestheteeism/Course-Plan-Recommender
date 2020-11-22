@@ -17,11 +17,15 @@ public class CoursePlan {
     /**--- PART  ALGORITHM 2 ---**/
 
     public void addMajorCourse(Course course, int termCount) {
+        // Set first semester max creHour to 16 (users are allowed to set their own terms' details
+        // This is only a sample case
+        coursePlan[0].setMaxCreHours(16);
+
         if (!course.isPicked()) {
             for (int i = termCount; i < coursePlan.length; i++) {
                 Term term = coursePlan[i];
                 if (term.getCreditHours() + course.getCreditHour() <= term.getMaxCreHours()
-                        && term.getDifficulty() + course.getDifficulty() <= term.getMaxDiff() - 4) {
+                        && term.getDifficulty() + course.getDifficulty() <= term.getMaxDiff() - 3) {
                     term.addCourse(course);
                     term.updateCreditHours(course.getCreditHour());
                     term.updateDifficulty(course.getDifficulty());
@@ -43,8 +47,7 @@ public class CoursePlan {
                 Term term = coursePlan[i];
 
                 if (term.getCreditHours() + course.getCreditHour() <= term.getMaxCreHours()
-                        && (term.getDifficulty() + course.getDifficulty() <= term.getMaxDiff()
-                            || term.getCreditHours() < term.getMinCreHours())) {
+                        && term.getDifficulty() + course.getDifficulty() <= term.getMaxDiff()) {
                     term.addCourse(course);
                     term.updateCreditHours(course.getCreditHour());
                     term.updateDifficulty(course.getDifficulty());

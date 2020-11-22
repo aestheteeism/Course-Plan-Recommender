@@ -25,6 +25,8 @@ public class Main {
 		coursePlan.printCoursePlan();
 		System.out.println("=====================================================\n\n");
 
+		majorGraph.printImportance();
+
 	}
 
 	public static void getMiamiPlan() {
