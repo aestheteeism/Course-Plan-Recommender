@@ -38,10 +38,11 @@ public class CourseSet {
 				course.setCreditHour(Integer.parseInt(data[2])); 
 				course.setDifficulty(Integer.parseInt(data[3])); 
 				course.setNrt(Integer.parseInt(data[4]));
-				course.setMandatory(Boolean.parseBoolean(data[5])); 
+				course.setMandatory(Boolean.parseBoolean(data[5]));
+				course.setFoundation(data[6]);
 				ArrayList<Course> preReqs = new ArrayList<Course>();
-				if (data.length >= 6) {
-					for(int i = 6; i < data.length; i++) {
+				if (data.length >= 7) {
+					for(int i = 7; i < data.length; i++) {
 						preReqs.add(getCourseByName(data[i]));
 					}
 				}

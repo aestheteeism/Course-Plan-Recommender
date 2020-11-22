@@ -9,7 +9,7 @@ public class Term {
     private int maxDiff;
 
     public Term() {
-        this(0, 12, 20, 0, 15);
+        this(0, 12, 20, 0, 16);
     }
 
     public Term(int creditHours, int minCreHours, int maxCreHours, int difficulty, int maxDiff) {
@@ -75,8 +75,8 @@ public class Term {
 
     public void printCourses() {
         for (Course course : term) {
-            System.out.print(course.getName().substring(0, 7) + " || ");
+            System.out.printf(course.getName().substring(0, 7) + " || ");
         }
-        System.out.println();
+        System.out.printf("%nCredit Hours: %-2d || Difficilty: %-2d%n%n", creditHours, difficulty);
     }
 }

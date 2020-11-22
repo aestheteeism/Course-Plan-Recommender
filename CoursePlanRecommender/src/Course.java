@@ -5,7 +5,8 @@ public class Course implements Comparable<Course> {
 	private String name; 
 	private int creditHour; 
 	private int difficulty; 
-	private int nrt; 
+	private int nrt;
+	private String foundation;
 	private boolean isMandatory;
 	private boolean isPicked;
 	private ArrayList<Course> preReqs;
@@ -13,7 +14,7 @@ public class Course implements Comparable<Course> {
 
 	public Course() {}
 
-	public Course(int id, String name, int creditHour, int difficulty, int nrt, boolean isMandatory,
+	public Course(int id, String name, int creditHour, int difficulty, int nrt, String foundation, boolean isMandatory,
 			ArrayList<Course> preReqs) {
 		super();
 		this.id = id;
@@ -21,6 +22,7 @@ public class Course implements Comparable<Course> {
 		this.creditHour = creditHour;
 		this.difficulty = difficulty;
 		this.nrt = nrt;
+		this.foundation = foundation;
 		this.isMandatory = isMandatory;
 		this.preReqs = preReqs;
 		this.isPicked = false;
@@ -68,6 +70,14 @@ public class Course implements Comparable<Course> {
 
 	public void setNrt(int nrt) {
 		this.nrt = nrt;
+	}
+
+	public String getFoundation() {
+		return foundation;
+	}
+
+	public void setFoundation(String foundation) {
+		this.foundation = foundation;
 	}
 
 	public boolean isMandatory() {

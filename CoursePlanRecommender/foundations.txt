@@ -1,0 +1,40 @@
+1	ENG 111 Composition and Rhetoric	3	1	1	false	I
+2	ARC 107 Global Design	3	1	0	false	IIA
+3	ARC 188 Ideas in Architecture	3	1	0	false	IIA
+4	ARC 221 History of Architecture I	3	1	-5	false	IIA
+5	ART 188 History of Western Art: Renaissance - Modern	3	1	-3	false	IIA
+6	ART 256 Design, Perception & Audience	3	1	0	false	IIA
+7	IMS 254 Design Thinking & Design Principles Applied	3	1	3	false	IIA
+8	MUS 185 The Diverse Worlds of Music	3	1	2	false	IIA,IIB,III
+9	THE 101 Introduction to Theatre: Drama and Analysis	3	1	5	false	IIA
+10	AAA 201 Introduction to Asian/ Asian American Studies	3	1	5	false	IIB,IIC,III
+11	CSE 262 Technology, Ethics, and Global Society	3	3	0	true	IIB
+12	EDL 204 Sociocultural Studies in Education	3	1	-2	false	IIB
+13	ENG 122 Popular Literature	3	1	2	false	IIB
+14	ENG 171 Humanities and Technology	3	1	4	false	IIB
+15	THE 123 Acting for the Non-Major: Text and Performance	3	1	2	false	IIB
+16	PHL 103 Society and the Individual	3	1	-4	false	IIB
+17	ECO 201 Principles of Microeconomics	3	2	-2	true	IIC
+18	EDL 232 Introduction to Community-Based Leadership	3	1	-5	false	IIC
+19	EDP 101 Psychology Of The Learner	3	1	0	false	IIC
+20	KNH 125 Introduction to Public Health	3	1	2	false	IIC
+21	POL 142 American Politics and Diversity	3	1	0	false	IIC
+22	AMS 207 America: Global and Intercultural Perspectives	3	1	2	false	III
+23	GEO 101 Global Forces, Local Diversity	3	1	-2	false	III
+24	WGS 201 Introduction to Women's Studies	3	1	0	false	III
+25	BIO 101 Biotechnology: Coming of Age in the 21st Century	3	1	-5	false	IVA
+26	BIO 115 Biological Concepts: Ecology, Evolution, Genetics, and Diversity	4	3	5	false	IVA
+27	BIO 116 Biological Concepts: Structure, Function, Cellular, and Molecular Biology	4	3	5	false	IVA
+28	BIO 161 Principles of Human Physiology	4	2	0	false	IVA
+29	MBI 111 Microorganisms and Human Disease	3	1	0	false	IVA
+30	CHM 111 Chemistry in Modern Society	3	1	0	false	IVB
+31	CHM 141 College Chemistry	5	3	3	false	IVB
+32	PHY 191 General Physics with Laboratory I	5	4	5	false	IVB
+33	PHY 192 General Physics with Laboratory II	5	4	5	false	IVB
+34	GEO 121 Earth's Physical Environment	4	2	-5	false	IVB
+35	PHY 101 Physics and Society	3	1	4	false	IVB
+36	IMS 222 Introduction to Interaction Design and Development	3	1	2	false	V
+37	MTH 151 Calculus I	5	2	3	true	V
+38	MTH 249 Calculus II	4	3	4	false	V
+39	STA 301 Applied Statistics	3	2	3	true	V	MTH 151
+40	ARC 212 Principles of Environmental Systems	3	1	-2	false	V

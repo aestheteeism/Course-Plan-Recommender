@@ -2,32 +2,42 @@ import java.util.*;
 
 public class CourseGraph {
     private Map<Course, List<Course>> majorGraph;
-    private PriorityQueue<Course> allElectives;
-    private ArrayList<Course> allCourses;
-    private CourseSet courseSet;
+    private PriorityQueue<Course> allMajorElectives;
+    private ArrayList<Course> allMajorCourses;
+    private CourseSet majorCourseSet;
+    private PriorityQueue<Course> miamiPlan;
+    private Map<String, Integer> foundationCreHours;
 
     // Constructor
-    public CourseGraph(String path) {
-        this.courseSet = new CourseSet(path);
-        this.majorGraph = courseSet.toAdjacencyList(false);
-        this.allElectives = courseSet.getElectives();
-        this.allCourses = courseSet.getAllCourses();
+    public CourseGraph(String majorDataPath) {
+        this.majorCourseSet = new CourseSet(majorDataPath);
+        this.majorGraph = majorCourseSet.toAdjacencyList(false);
+        this.allMajorElectives = majorCourseSet.getElectives();
+        this.allMajorCourses = majorCourseSet.getAllCourses();
+        this.miamiPlan = null;
+        this.foundationCreHours = getFoundationsCre();
     }
 
     // Copy Constructor
     public CourseGraph(CourseGraph copiedGraph) {
-        courseSet = copiedGraph.getCourseSet();
-        this.majorGraph = courseSet.toAdjacencyList(false);
-        this.allElectives = courseSet.getElectives();
-        this.allCourses = courseSet.getAllCourses();
+        majorCourseSet = copiedGraph.getMajorCourseSet();
+        this.majorGraph = majorCourseSet.toAdjacencyList(false);
+        this.allMajorElectives = majorCourseSet.getElectives();
+        this.allMajorCourses = majorCourseSet.getAllCourses();
+        this.miamiPlan = null;
+        this.foundationCreHours = getFoundationsCre();
     }
 
-    public CourseSet getCourseSet() {
-        return courseSet;
+    public CourseSet getMajorCourseSet() {
+        return majorCourseSet;
     }
 
-    public ArrayList<Course> getAllCourses() {
-        return allCourses;
+    public PriorityQueue<Course> getMiamiPlan() {
+        return miamiPlan;
+    }
+
+    public ArrayList<Course> getAllMajorCourses() {
+        return allMajorCourses;
     }
 
     public Map<Course, List<Course>> getAdjList() {
@@ -55,14 +65,14 @@ public class CourseGraph {
     public void addElectives() {
         int electiveHours = 0;
         while (electiveHours < 21) {
-            if (!allElectives.isEmpty()) {
-                Course bestCourse = allElectives.poll();
+            if (!allMajorElectives.isEmpty()) {
+                Course bestCourse = allMajorElectives.poll();
                 bestCourse.setMandatory(true);
                 electiveHours += bestCourse.getCreditHour();
             }
         }
         // Update the graph with selected electives
-        majorGraph = courseSet.toAdjacencyList(true);
+        majorGraph = majorCourseSet.toAdjacencyList(true);
     }
 
     /**--- END OF ALGORITHM 1 ---**/
@@ -99,6 +109,9 @@ public class CourseGraph {
                 headQueue.add(null);
             } else {
                 coursePlan.addMajorCourse(course, termCount);
+                if (!course.getFoundation().equals("M")) {
+                    updateFoundationsCre(course.getFoundation(), course.getCreditHour());
+                }
 
                 List<Course> adjacentCourses = majorGraph.get(course);
     //            sortingGraph.clearEdges(course);
@@ -116,6 +129,10 @@ public class CourseGraph {
             }
         }
 
+//        for (String foundation : foundationCreHours.keySet()) {
+//            System.out.println(foundation + ": " + foundationCreHours.get(foundation));
+//        }
+
     }
 
     public Map<Course, Integer> getIndegree(CourseGraph courseGraph) {
@@ -124,12 +141,7 @@ public class CourseGraph {
 
         for (Map.Entry<Course, List<Course>> entry : majorGraph.entrySet()) {
             Course course = entry.getKey();
-            indegree.put(course, 0);
-        }
-        for (Map.Entry<Course, List<Course>> entry : majorGraph.entrySet()) {
-            for(Course course : entry.getValue()) {
-                indegree.replace(course, indegree.get(course) + 1);
-            }
+            indegree.put(course, course.getPreReqs().size());
         }
 
         return indegree;
@@ -168,11 +180,76 @@ public class CourseGraph {
 
     /**--- END OF ALGORITHM 2 ---**/
 
+
     /**--- ALGORITHM 3 ---**/
+
+    public void selectMiamiPlan(CoursePlan coursePlan) {
+        miamiPlan = loadMiamiPlanSet();
+
+        while (!foundationCreHours.isEmpty()) {
+            if (!miamiPlan.isEmpty()) {
+                Course bestMiamiPlan = miamiPlan.poll();
+                if (updateFoundationsCre(bestMiamiPlan.getFoundation(), bestMiamiPlan.getCreditHour())) {
+                    coursePlan.addMiamiPlan(bestMiamiPlan);
+                }
+            }
+        }
+    }
+
+    private Map<String, Integer> getFoundationsCre() {
+        Map<String, Integer> foundations = new TreeMap<>();
+        foundations.put("I", 3);
+        foundations.put("IIA", 3);
+        foundations.put("IIB", 3);
+        foundations.put("IIC", 3);
+        foundations.put("III", 6);
+        foundations.put("IVA", 4);
+        foundations.put("IVB", 6);
+        foundations.put("V", 3);
+
+        return foundations;
+    }
+
+    private boolean updateFoundationsCre(String courseFoundation, int creHours) {
+        // Update course's foundation's credit hours left, remove any fulfilled foundation
+
+        if (foundationCreHours.get(courseFoundation) != null) {
+            int remainingCre = foundationCreHours.get(courseFoundation) - creHours;
+
+            if (remainingCre > 0) {
+                foundationCreHours.put(courseFoundation, Math.max(remainingCre, 0));
+            } else {
+                foundationCreHours.remove(courseFoundation);
+            }
+
+            return true;
+
+        } else if (courseFoundation.indexOf(",") != -1) {
+            String[] foundationOpt = courseFoundation.split(",");
+
+            for (String subFoundation : foundationOpt) {
+                if (updateFoundationsCre(subFoundation, creHours)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public PriorityQueue<Course> loadMiamiPlanSet() {
+        // Path to data files
+        String head = "/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/";
+        String path = head + "foundations.txt";
+        CourseSet miamiPlanSet =  new CourseSet(path);
+
+        return miamiPlanSet.getElectives();
+    }
 
     /**--- END OF ALGORITHM 3 ---**/
 
-    // Print Graph
+
+    // Print Methods
     public void printGraph() {
         int count = 0;
         for (Map.Entry<Course, List<Course>> entry : majorGraph.entrySet()) {
@@ -190,7 +267,6 @@ public class CourseGraph {
         System.out.println(count);
     }
 
-    // Print Selected Courses
     public void printMandatory() {
         int count = 0;
         for (Map.Entry<Course, List<Course>> entry : majorGraph.entrySet()) {
@@ -201,6 +277,31 @@ public class CourseGraph {
             }
         }
         System.out.printf("In total: %d courses\n", count);
-        System.out.println("=============================\n");
+        System.out.println("===================================================\n\n");
+    }
+
+    public void printAllCourses() {
+        int count = 0;
+        System.out.println("Core Courses:");
+        for (Map.Entry<Course, List<Course>> entry : majorGraph.entrySet()) {
+            Course key = entry.getKey();
+            if (key.isMandatory()) {
+                count++;
+                System.out.println(key.getName());
+            }
+        }
+        System.out.printf("In total: %d courses\n", count);
+
+        count = 0;
+        System.out.println("\nElective Courses:");
+        for (Map.Entry<Course, List<Course>> entry : majorGraph.entrySet()) {
+            Course key = entry.getKey();
+            if (!key.isMandatory()) {
+                count++;
+                System.out.println(key.getName());
+            }
+        }
+        System.out.printf("In total: %d courses\n", count);
+        System.out.println("=====================================================\n\n");
     }
 }
