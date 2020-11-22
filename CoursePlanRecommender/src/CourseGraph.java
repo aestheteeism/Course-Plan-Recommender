@@ -166,16 +166,15 @@ public class CourseGraph {
     }
 
     private int fullLength(List<Course> requisites, boolean isPreReq) {
+        int length = 0;
         if (requisites == null) {
-            return 0;
         } else {
-            int length = requisites.size();
             for (Course course : requisites) {
-                if (isPreReq) length += fullLength(course.getPreReqs(), true);
-                else length += fullLength(majorGraph.get(course), false);
+                if (isPreReq) length = 1 + fullLength(course.getPreReqs(), true);
+                else length = 1 + fullLength(majorGraph.get(course), false);
             }
-            return length;
         }
+        return length;
     }
 
     /**--- END OF ALGORITHM 2 ---**/

@@ -27,32 +27,6 @@ public class Main {
 
 	}
 
-//	COURSE PLAN:
-//	Term 1 : CSE 174 || CEC 101 || MTH 151 || ENG 111 || CSE 262 || STC 135 ||
-//	Credit Hours: 18 || Difficilty: 10
-//
-//	Term 2 : ECO 201 || CSE 271 || CSE 102 || MTH 231 || STA 301 ||
-//	Credit Hours: 15 || Difficilty: 10
-//
-//	Term 3 : ENG 313 || CSE 274 || CSE 278 ||
-//	Credit Hours: 9  || Difficilty: 8
-//
-//	Term 4 : CSE 201 || CSE 385 || CSE 474 ||
-//	Credit Hours: 9  || Difficilty: 10
-//
-//	Term 5 : CSE 432 || CSE 465 || CSE 374 ||
-//	Credit Hours: 9  || Difficilty: 12
-//
-//	Term 6 : CSE 486 || CSE 383 || CSE 381 ||
-//	Credit Hours: 9  || Difficilty: 10
-//
-//	Term 7 : CSE 448 || CSE 484 || CSE 451 ||
-//	Credit Hours: 8  || Difficilty: 12
-//
-//	Term 8 : CSE 467 || CSE 449 ||
-//	Credit Hours: 5  || Difficilty: 8
-
-
 	public static void getMiamiPlan() {
 		String head = "/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/";
 //		String head = "";
