@@ -1,6 +1,0 @@
-1	CHM 111 Chemistry in Modern Society	3	1	0	false
-2	CHM 141 College Chemistry	5	3	3	false
-3	PHY 191 General Physics with Laboratory I	5	4	5	false
-4	PHY 192 General Physics with Laboratory II	5	4	5	false
-5	GEO 121 Earth's Physical Environment	4	2	-5	false
-6	PHY 101 Physics and Society	3	1	4	false

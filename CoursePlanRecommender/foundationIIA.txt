@@ -1,8 +1,0 @@
-1	ARC 107 Global Design	3	1	0	false
-2	ARC 188 Ideas in Architecture	3	1	0	false
-3	ARC 221 History of Architecture I	3	1	-5	false
-4	ART 188 History of Western Art: Renaissance - Modern	3	1	-3	false
-5	ART 256 Design, Perception & Audience	3	1	0	false
-6	IMS 254 Design Thinking & Design Principles Applied	3	1	3	false
-7	MUS 185 The Diverse Worlds of Music	3	1	2	false
-8	THE 101 Introduction to Theatre: Drama and Analysis	3	1	5	false

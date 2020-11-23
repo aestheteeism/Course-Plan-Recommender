@@ -1,8 +1,0 @@
-1	AAA 201 Introduction to Asian/ Asian American Studies	3	1	0	false
-2	CSE 262 Technology, Ethics, and Global Society	3	3	0	true
-3	EDL 204 Sociocultural Studies in Education	3	1	-2	false
-4	ENG 122 Popular Literature	3	1	2	false
-5	ENG 171 Humanities and Technology	3	1	4	false
-6	THE 123 Acting for the Non-Major: Text and Performance	3	1	2	false
-7	MUS 185 The Diverse Worlds of Music	3	1	2	false
-8	PHL 103 Society and the Individual	3	1	-4	false
