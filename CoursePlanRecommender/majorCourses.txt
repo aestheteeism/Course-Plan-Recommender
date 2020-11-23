@@ -1,10 +1,10 @@
 1	ECO 201 Principles of Microeconomics	3	3	0	true	IIC
 2	ENG 111 Composition and Rhetoric	3	2	0	true	I
-3	ENG 313 Technical Writing	3	3	0	true	M	ENG 111
-4	MTH 151 Calculus I	5	1	0	true	V
-5	STC 135 Principles of Public Speaking	3	2	0	true	M
-6	MTH 231 Elements of Discrete Mathematics	3	2	0	true	M	MTH 151
-7	STA 301 Applied Statistics	3	2	0	true	V	MTH 151
+3	MTH 151 Calculus I	5	1	0	true	V
+4	STC 135 Principles of Public Speaking	3	2	0	true	M
+5	MTH 231 Elements of Discrete Mathematics	3	2	0	true	M	MTH 151
+6	STA 301 Applied Statistics	3	2	0	true	V	MTH 151
+7	ENG 313 Technical Writing	3	3	0	true	M	ENG 111
 8	CEC 101 Computing, Engineering & Society	1	1	0	true	M
 9	CSE 102 Introduction to Computer Science and Software Engineering	3	1	0	true	M	CEC 101
 10	CSE 174 Fundamentals of Programming and Problem Solving	3	1	0	true	M

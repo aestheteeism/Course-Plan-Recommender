@@ -24,6 +24,13 @@ public class CoursePlan {
         if (!course.isPicked()) {
             for (int i = termCount; i < coursePlan.length; i++) {
                 Term term = coursePlan[i];
+
+                for (Course addedCourse : term.getTerm()) {
+                    if (course.getPreReqs().contains(addedCourse)) {
+                        term = coursePlan[++i];
+                        break;
+                    }
+                }
                 if (term.getCreditHours() + course.getCreditHour() <= term.getMaxCreHours()
                         && term.getDifficulty() + course.getDifficulty() <= term.getMaxDiff() - 3) {
                     term.addCourse(course);
@@ -57,6 +64,7 @@ public class CoursePlan {
     /**--- END OF PART OF ALGORITHM 3 ---**/
 
 
+    // Print method
     public void printCoursePlan() {
         System.out.println("COURSE PLAN:");
 

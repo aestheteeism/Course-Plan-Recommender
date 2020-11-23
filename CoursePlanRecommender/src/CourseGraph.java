@@ -339,7 +339,7 @@ public class CourseGraph {
 
 
 
-    /**--- TEST ALGORITHM 2 ---**/
+    /**--- FOR TESTING ALGORITHM 2 ---**/
 
     public void topologicalSortCourses(CoursePlan coursePlan) {
         Queue<Course> headQueue = new LinkedList<>();
