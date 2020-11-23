@@ -7,6 +7,9 @@ public class CourseGraph {
     private CourseSet majorCourseSet;
     private PriorityQueue<Course> miamiPlan;
     private Map<String, Integer> foundationCreHours;
+    private ArrayList<Course> allSelectedElectives;
+    private ArrayList<Course> allSelectedMP;
+    private int maxElectiveHours;
 
     // Constructor
     public CourseGraph(String majorDataPath) {
@@ -16,6 +19,9 @@ public class CourseGraph {
         this.allMajorCourses = majorCourseSet.getAllCourses();
         this.miamiPlan = null;
         this.foundationCreHours = getFoundationsCre();
+        this.maxElectiveHours = 21;
+        this.allSelectedElectives = new ArrayList<>();
+        this.allSelectedMP = new ArrayList<>();
     }
 
     // Copy Constructor
@@ -26,22 +32,45 @@ public class CourseGraph {
         this.allMajorCourses = majorCourseSet.getAllCourses();
         this.miamiPlan = null;
         this.foundationCreHours = getFoundationsCre();
+        this.maxElectiveHours = 21;
+        this.allSelectedElectives = new ArrayList<>();
+        this.allSelectedMP = new ArrayList<>();
     }
 
     public CourseSet getMajorCourseSet() {
         return majorCourseSet;
     }
 
-    public PriorityQueue<Course> getMiamiPlan() {
-        return miamiPlan;
+    public ArrayList<Course> getMiamiPlan() {
+        return new ArrayList<>(miamiPlan);
     }
 
     public ArrayList<Course> getAllMajorCourses() {
         return allMajorCourses;
     }
 
+    public ArrayList<Course> getAllMajorElectives() {
+        return new ArrayList<>(allMajorElectives);
+    }
+
+    public ArrayList<Course> getAllSelectedElectives() {
+        return allSelectedElectives;
+    }
+
+    public ArrayList<Course> getAllSelectedMP() {
+        return allSelectedMP;
+    }
+
     public Map<Course, List<Course>> getAdjList() {
         return majorGraph;
+    }
+
+    public int getMaxElectiveHours() {
+        return maxElectiveHours;
+    }
+
+    public void setMaxElectiveHours(int maxElectiveHours) {
+        this.maxElectiveHours = maxElectiveHours;
     }
 
     // Function to add an edge to graph
@@ -64,10 +93,11 @@ public class CourseGraph {
 
     public void addElectives() {
         int electiveHours = 0;
-        while (electiveHours < 21) {
+        while (electiveHours < maxElectiveHours) {
             if (!allMajorElectives.isEmpty()) {
                 Course bestCourse = allMajorElectives.poll();
                 bestCourse.setMandatory(true);
+                allSelectedElectives.add(bestCourse);
                 electiveHours += bestCourse.getCreditHour();
             }
         }
@@ -83,7 +113,6 @@ public class CourseGraph {
     public void selectCourses(CoursePlan coursePlan) {
         int termCount = 0;
         Queue<Course> headQueue = new LinkedList<>();
-//        PriorityQueue<Course> sameLevelCourses = new PriorityQueue<Course>(Comparator.comparingInt(o -> -2*getImportance(o) + Integer.parseInt(o.getName().substring(4,5))));
         PriorityQueue<Course> sameLevelCourses = new PriorityQueue<Course>(new Comparator<Course>() {
             @Override
             public int compare(Course c1, Course c2) {
@@ -94,7 +123,7 @@ public class CourseGraph {
                 return compare;
             }
         });
-//        CourseGraph sortingGraph = new CourseGraph(this);
+
         Map<Course, Integer> indegreeList = getIndegree(this);
         ArrayList<Course> startingNodes = getStartingNodes(this);
 
@@ -124,7 +153,6 @@ public class CourseGraph {
                 }
 
                 List<Course> adjacentCourses = majorGraph.get(course);
-    //            sortingGraph.clearEdges(course);
                 for (Course nextCourse : adjacentCourses) {
                     indegreeList.put(nextCourse, indegreeList.get(nextCourse) - 1);
                     if (indegreeList.get(nextCourse) == 0) {
@@ -138,16 +166,10 @@ public class CourseGraph {
                 }
             }
         }
-
-//        for (String foundation : foundationCreHours.keySet()) {
-//            System.out.println(foundation + ": " + foundationCreHours.get(foundation));
-//        }
-
     }
 
     public Map<Course, Integer> getIndegree(CourseGraph courseGraph) {
         Map<Course, Integer> indegree = new HashMap<>();
-//        Map<Course, List<Course>> adjList = courseGraph.getAdjList();
 
         for (Map.Entry<Course, List<Course>> entry : majorGraph.entrySet()) {
             Course course = entry.getKey();
@@ -187,14 +209,6 @@ public class CourseGraph {
         return length;
     }
 
-    public void printImportance() {
-        for (Course course : majorGraph.keySet()) {
-            System.out.println(course.getName().substring(0, 7));
-            System.out.println(fullLength(course.getPreReqs(), true));
-            System.out.println(fullLength(majorGraph.get(course), false));
-        }
-    }
-
     /**--- END OF ALGORITHM 2 ---**/
 
 
@@ -208,6 +222,7 @@ public class CourseGraph {
                 Course bestMiamiPlan = miamiPlan.poll();
                 if (updateFoundationsCre(bestMiamiPlan.getFoundation(), bestMiamiPlan.getCreditHour())) {
                     coursePlan.addMiamiPlan(bestMiamiPlan);
+                    allSelectedMP.add(bestMiamiPlan);
                 }
             }
         }
@@ -274,10 +289,10 @@ public class CourseGraph {
             count++;
 
             List<Course> value = entry.getValue();
-            System.out.println("\nAdjacency list of vertex " + key.getName());
-            System.out.print("head");
+            System.out.print(key.getName());
+            System.out.print(" ==>");
             for(Course c : value) {
-                System.out.print(" -> " + c.getName());
+                System.out.print(" + " + c.getName());
             }
             System.out.println();
         }
@@ -320,5 +335,38 @@ public class CourseGraph {
         }
         System.out.printf("In total: %d courses\n", count);
         System.out.println("=====================================================\n\n");
+    }
+
+
+
+    /**--- TEST ALGORITHM 2 ---**/
+
+    public void topologicalSortCourses(CoursePlan coursePlan) {
+        Queue<Course> headQueue = new LinkedList<>();
+        Map<Course, Integer> indegreeList = getIndegree(this);
+        ArrayList<Course> startingNodes = getStartingNodes(this);
+
+        for (Course course : startingNodes) {
+            headQueue.add(course);
+        }
+
+        int count = 0;
+
+        while (!headQueue.isEmpty()) {
+            Course course = headQueue.poll();
+
+            coursePlan.addMajorCourse(course, 0);
+            if (!course.getFoundation().equals("M")) {
+                updateFoundationsCre(course.getFoundation(), course.getCreditHour());
+            }
+
+            List<Course> adjacentCourses = majorGraph.get(course);
+            for (Course nextCourse : adjacentCourses) {
+                indegreeList.put(nextCourse, indegreeList.get(nextCourse) - 1);
+                if (indegreeList.get(nextCourse) == 0) {
+                    headQueue.add(nextCourse);
+                }
+            }
+        }
     }
 }

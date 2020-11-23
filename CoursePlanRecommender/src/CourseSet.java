@@ -16,6 +16,9 @@ public class CourseSet {
 				int compare = Integer.compare(c2.getNrt(), c1.getNrt());
 				if (compare == 0) {
 					compare = Integer.compare(c1.getDifficulty(), c2.getDifficulty());
+					if (compare == 0) {
+						compare = Integer.compare(c1.getCreditHour(), c2.getCreditHour());
+					}
 				}
 				return compare;				
 			}

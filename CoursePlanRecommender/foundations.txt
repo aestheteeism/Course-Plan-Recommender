@@ -34,7 +34,7 @@
 34	GEO 121 Earth's Physical Environment	4	2	-5	false	IVB
 35	PHY 101 Physics and Society	3	1	4	false	IVB
 36	IMS 222 Introduction to Interaction Design and Development	3	1	2	false	V
-37	MTH 151 Calculus I	5	2	3	true	V
+37	MTH 151 Calculus I	5	2	0	true	V
 38	MTH 249 Calculus II	4	3	4	false	V
 39	STA 301 Applied Statistics	3	2	3	true	V	MTH 151
 40	ARC 212 Principles of Environmental Systems	3	1	-2	false	V
