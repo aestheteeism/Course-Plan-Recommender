@@ -1,5 +1,0 @@
-1	IMS 222 Introduction to Interaction Design and Development	3	1	2	false
-2	MTH 151 Calculus I	5	2	3	true
-3	MTH 249 Calculus II	4	3	4	false
-4	STA 301 Applied Statistics	3	2	3	true	MTH 151
-5	ARC 212 Principles of Environmental Systems	3	1	-2	false

@@ -1,6 +1,0 @@
-1	AAA 201 Introduction to Asian/ Asian American Studies	3	1	0	false
-2	ECO 201 Principles of Microeconomics	3	2	-2	true
-3	EDL 232 Introduction to Community-Based Leadership	3	1	-5	false
-4	EDP 101 Psychology Of The Learner	3	1	0	false
-5	KNH 125 Introduction to Public Health	3	1	2	false
-6	POL 142 American Politics and Diversity	3	1	0	false

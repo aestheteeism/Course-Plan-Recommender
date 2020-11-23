@@ -1,5 +1,0 @@
-1	AAA 201 Introduction to Asian/ Asian American Studies	3	1	0	false
-2	AMS 207 America: Global and Intercultural Perspectives	3	1	2	false
-3	GEO 101 Global Forces, Local Diversity	3	1	-2	false
-4	MUS 185 The Diverse Worlds of Music	3	1	5	false
-5	WGS 201 Introduction to Women's Studies	3	1	0	false
