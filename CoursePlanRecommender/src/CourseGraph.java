@@ -37,6 +37,7 @@ public class CourseGraph {
         this.allSelectedMP = new ArrayList<>();
     }
 
+    // Get and Set methods
     public CourseSet getMajorCourseSet() {
         return majorCourseSet;
     }
@@ -90,7 +91,6 @@ public class CourseGraph {
 
 
     /**--- ALGORITHM 1 ---**/
-
     public void addElectives() {
         int electiveHours = 0;
         while (electiveHours < maxElectiveHours) {
@@ -104,12 +104,10 @@ public class CourseGraph {
         // Update the graph with selected electives
         majorGraph = majorCourseSet.toAdjacencyList(true);
     }
-
     /**--- END OF ALGORITHM 1 ---**/
 
 
     /**--- ALGORITHM 2 ---**/
-
     public void selectCourses(CoursePlan coursePlan) {
         int termCount = 0;
         Queue<Course> headQueue = new LinkedList<>();
@@ -208,12 +206,10 @@ public class CourseGraph {
         }
         return length;
     }
-
     /**--- END OF ALGORITHM 2 ---**/
 
 
     /**--- ALGORITHM 3 ---**/
-
     public void selectMiamiPlan(CoursePlan coursePlan) {
         miamiPlan = loadMiamiPlanSet();
 
@@ -277,11 +273,10 @@ public class CourseGraph {
 
         return miamiPlanSet.getElectives();
     }
-
     /**--- END OF ALGORITHM 3 ---**/
 
 
-    // Print Methods
+    /**--- PRINT METHODS ---**/
     public void printGraph() {
         int count = 0;
         for (Map.Entry<Course, List<Course>> entry : majorGraph.entrySet()) {
@@ -340,7 +335,6 @@ public class CourseGraph {
 
 
     /**--- FOR TESTING ALGORITHM 2 ---**/
-
     public void topologicalSortCourses(CoursePlan coursePlan) {
         Queue<Course> headQueue = new LinkedList<>();
         Map<Course, Integer> indegreeList = getIndegree(this);
@@ -368,5 +362,25 @@ public class CourseGraph {
                 }
             }
         }
+    }
+
+    /**--- FOR TESTING ALGORITHM 1 & 3 ---**/
+    public ArrayList<Course> randomSelection(String majorDataPath, int selectionSize) {
+        CourseSet testCourseSet = new CourseSet(majorDataPath);
+        ArrayList<Course> courses = new ArrayList<>(testCourseSet.getElectives());
+
+        return selectRandomElements(courses, selectionSize);
+    }
+
+    public ArrayList<Course> selectRandomElements(ArrayList<Course> list, int totalItems) {
+        Random rand = new Random();
+
+        ArrayList<Course> newList = new ArrayList<>();
+        for (int i = 0; i < totalItems; i++) {
+            int randomIndex = rand.nextInt(list.size());
+            newList.add(list.get(randomIndex));
+            list.remove(randomIndex);
+        }
+        return newList;
     }
 }

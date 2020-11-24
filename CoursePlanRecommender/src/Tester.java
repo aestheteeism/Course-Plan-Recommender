@@ -3,8 +3,9 @@ import java.util.ArrayList;
 public class Tester {
 
     public static void main(String[] args) {
-        testAlgo1();
         testAlgo2();
+
+        testAlgo1();
         testAlgo3();
     }
 
@@ -14,10 +15,10 @@ public class Tester {
         CourseGraph majorGraph = new CourseGraph(path);
         CoursePlan coursePlan = new CoursePlan();
 
+        majorGraph.addElectives();
         System.out.println("\n\n=========== TESTING ALGO 2: ===========\n");
 
 
-        majorGraph.addElectives();
         System.out.println("======== RUNNING ALGO 2: ========");
         majorGraph.selectCourses(coursePlan);
         coursePlan.printCoursePlan();
@@ -41,7 +42,7 @@ public class Tester {
 
     public static void testAlgo3() {
         String path = "/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/majorCourses.txt";
-//		String path = "majorCourses.txt";
+        //		String path = "majorCourses.txt";
         CourseGraph majorGraph = new CourseGraph(path);
         CoursePlan coursePlan = new CoursePlan();
 
@@ -50,15 +51,25 @@ public class Tester {
         majorGraph.addElectives();
         majorGraph.selectCourses(coursePlan);
 
+        String foundationPath = "/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/foundations.txt";
         majorGraph.selectMiamiPlan(coursePlan);
         ArrayList<Course> fullMP = majorGraph.getMiamiPlan();
         ArrayList<Course> selectedMP = majorGraph.getAllSelectedMP();
 
-        System.out.printf("%-28s %10s %10s\n", "", "Selected", "Full");
-        System.out.printf("%-28s %10f %10f\n", "Mean Difficulty:", meanDifficulty(selectedMP), meanDifficulty(fullMP));
-        System.out.printf("%-28s %10f %10f\n", "Variance of Difficulty:", varianceDifficulty(selectedMP), varianceDifficulty(fullMP));
-        System.out.printf("%-28s %10f %10f\n", "Mean Interest Level:", meanNRT(selectedMP), meanNRT(fullMP));
-        System.out.printf("%-28s %10f %10f\n", "Variance of Interest Level:", varianceNRT(selectedMP), varianceNRT(fullMP));
+
+        double avgRandomNRT = 0.0;
+        double avgRandomDiff = 0.0;
+        for (int i = 0; i < 10; i++) {
+            ArrayList<Course> randomMP = majorGraph.randomSelection(foundationPath, selectedMP.size());
+            avgRandomNRT += meanNRT(randomMP);
+            avgRandomDiff += meanDifficulty(randomMP);
+        }
+        avgRandomNRT /= 10.0;
+        avgRandomDiff /= 10.0;
+
+        System.out.printf("%-28s %10s %10s %10s\n", "", "Selected", "Random", "Full");
+        System.out.printf("%-28s %10f %10f %10f\n", "Mean Interest Level:", meanNRT(selectedMP), avgRandomNRT, meanNRT(fullMP));
+        System.out.printf("%-28s %10f %10f %10f\n", "Mean Difficulty:", meanDifficulty(selectedMP), avgRandomDiff, meanDifficulty(fullMP));
 
     }
 
@@ -66,7 +77,6 @@ public class Tester {
         String path = "/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/majorCourses.txt";
 //		String path = "majorCourses.txt";
         CourseGraph majorGraph = new CourseGraph(path);
-        CoursePlan coursePlan = new CoursePlan();
 
         System.out.println("\n\n=========== TESTING ALGO 1: ===========\n");
 
@@ -74,11 +84,20 @@ public class Tester {
         majorGraph.addElectives();
         ArrayList<Course> selectedElectives = majorGraph.getAllSelectedElectives();
 
-        System.out.printf("%-28s %10s %10s\n", "", "Selected", "Full");
-        System.out.printf("%-28s %10f %10f\n", "Mean Difficulty:", meanDifficulty(selectedElectives), meanDifficulty(fullElectives));
-        System.out.printf("%-28s %10f %10f\n", "Variance of Difficulty:", varianceDifficulty(selectedElectives), varianceDifficulty(fullElectives));
-        System.out.printf("%-28s %10f %10f\n", "Mean Interest Level:", meanNRT(selectedElectives), meanNRT(fullElectives));
-        System.out.printf("%-28s %10f %10f\n", "Variance of Interest Level:", varianceNRT(selectedElectives), varianceNRT(fullElectives));
+        double avgRandomNRT = 0.0;
+        double avgRandomDiff = 0.0;
+        for (int i = 0; i < 10; i++) {
+            ArrayList<Course> randomElectives = majorGraph.randomSelection(path, selectedElectives.size());
+            avgRandomNRT += meanNRT(randomElectives);
+            avgRandomDiff += meanDifficulty(randomElectives);
+        }
+        avgRandomNRT /= 10.0;
+        avgRandomDiff /= 10.0;
+
+        System.out.printf("%-28s %10s %10s %10s\n", "", "Selected", "Random", "Full");
+        System.out.printf("%-28s %10f %10f %10f\n", "Mean Interest Level:", meanNRT(selectedElectives), avgRandomNRT, meanNRT(fullElectives));
+        System.out.printf("%-28s %10f %10f %10f\n", "Mean Difficulty:", meanDifficulty(selectedElectives), avgRandomDiff, meanDifficulty(fullElectives));
+
 
     }
 
