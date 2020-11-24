@@ -16,7 +16,11 @@ public class Main {
 		majorGraph.printMandatory();
 
 		System.out.println("======== AFTER ARRANGING MAJOR COURSES (ALGO 2): ========");
+//		long startTime = System.nanoTime();
 		majorGraph.selectCourses(coursePlan);
+//		long stopTime = System.nanoTime();
+//		System.out.println(stopTime - startTime);
+
 		coursePlan.printCoursePlan();
 		System.out.println("=====================================================\n\n");
 
