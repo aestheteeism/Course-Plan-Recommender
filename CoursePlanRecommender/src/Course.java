@@ -28,17 +28,13 @@ public class Course implements Comparable<Course> {
 		this.isPicked = false;
 	}
 
-
-
 	public int getId() {
 		return id;
 	}
 
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
 
 	public String getName() {
 		return name;
@@ -115,6 +111,4 @@ public class Course implements Comparable<Course> {
 		// TODO Auto-generated method stub
 		return Integer.compare(this.getId(), o.getId());
 	}
-
-
 }

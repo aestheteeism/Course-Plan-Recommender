@@ -15,7 +15,6 @@ public class CoursePlan {
     }
 
     /**--- PART  ALGORITHM 2 ---**/
-
     public void addMajorCourse(Course course, int termCount) {
         // Set first semester max creHour to 16 (users are allowed to set their own terms' details
         // This is only a sample case
@@ -40,12 +39,10 @@ public class CoursePlan {
             }
         }
     }
-
     /**--- END OF PART OF ALGORITHM 2 ---**/
 
 
     /**--- PART  ALGORITHM 3 ---**/
-
     public void addMiamiPlan(Course course) {
         if (!course.isPicked()) {
             for (int i = 0; i < coursePlan.length; i++) {
@@ -60,7 +57,6 @@ public class CoursePlan {
             }
         }
     }
-
     /**--- END OF PART OF ALGORITHM 3 ---**/
 
 
@@ -76,7 +72,6 @@ public class CoursePlan {
     }
 
     /**--- FOR TESTING ALGORITHM 2 ---**/
-
     public double varianceCreHours() {
         double[] data = new double[8];
         for (int i = 0; i < data.length; i++) {

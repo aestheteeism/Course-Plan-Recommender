@@ -74,22 +74,6 @@ public class CourseGraph {
         this.maxElectiveHours = maxElectiveHours;
     }
 
-    // Function to add an edge to graph
-    public void addEdge(Course u, Course v) {
-        majorGraph.get(u).add(v);
-    }
-
-    // Function to delete an edge to graph
-    public void deleteEdge(Course u, Course v) {
-        majorGraph.get(u).remove(v);
-    }
-
-    // Function to clear all edges of a node
-    public void clearEdges(Course u) {
-        majorGraph.put(u, new ArrayList<Course>());
-    }
-
-
     /**--- ALGORITHM 1 ---**/
     public void addElectives() {
         int electiveHours = 0;
@@ -240,7 +224,6 @@ public class CourseGraph {
 
     private boolean updateFoundationsCre(String courseFoundation, int creHours) {
         // Update course's foundation's credit hours left, remove any fulfilled foundation
-
         if (foundationCreHours.get(courseFoundation) != null) {
             int remainingCre = foundationCreHours.get(courseFoundation) - creHours;
 
@@ -333,7 +316,6 @@ public class CourseGraph {
     }
 
 
-
     /**--- FOR TESTING ALGORITHM 2 ---**/
     public void topologicalSortCourses(CoursePlan coursePlan) {
         Queue<Course> headQueue = new LinkedList<>();
@@ -343,8 +325,6 @@ public class CourseGraph {
         for (Course course : startingNodes) {
             headQueue.add(course);
         }
-
-        int count = 0;
 
         while (!headQueue.isEmpty()) {
             Course course = headQueue.poll();

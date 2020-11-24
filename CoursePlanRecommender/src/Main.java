@@ -3,8 +3,8 @@ import java.util.*;
 public class Main {
 
 	public static void main(String[] args) {
-		String path = "/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/majorCourses.txt";
-//		String path = "majorCourses.txt";
+//		String path = "/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/majorCourses.txt"; //for local usage
+		String path = "majorCourses.txt";
 		CourseGraph majorGraph = new CourseGraph(path);
 		CoursePlan coursePlan = new CoursePlan();
 
@@ -16,14 +16,10 @@ public class Main {
 		majorGraph.printMandatory();
 
 		System.out.println("======== AFTER ARRANGING MAJOR COURSES (ALGO 2): ========");
-//		long startTime = System.nanoTime();
 		majorGraph.selectCourses(coursePlan);
-//		long stopTime = System.nanoTime();
-//		System.out.println(stopTime - startTime);
 
 		coursePlan.printCoursePlan();
 		System.out.println("=====================================================\n\n");
-
 
 		System.out.println("======== AFTER ADDING MIAMI PLAN COURSES (ALGO 3): ========");
 		majorGraph.selectMiamiPlan(coursePlan);

@@ -4,26 +4,23 @@ public class Tester {
 
     public static void main(String[] args) {
         testAlgo2();
-
         testAlgo1();
         testAlgo3();
     }
 
     public static void testAlgo2() {
-        String path = "/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/majorCourses.txt";
-//		String path = "majorCourses.txt";
+//        String path = "/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/majorCourses.txt"; //for local usage
+		String path = "majorCourses.txt";
         CourseGraph majorGraph = new CourseGraph(path);
         CoursePlan coursePlan = new CoursePlan();
 
         majorGraph.addElectives();
         System.out.println("\n\n=========== TESTING ALGO 2: ===========\n");
 
-
         System.out.println("======== RUNNING ALGO 2: ========");
         majorGraph.selectCourses(coursePlan);
         coursePlan.printCoursePlan();
         System.out.println("=====================================================\n\n");
-
 
         CourseGraph majorGraph1 = new CourseGraph(path);
         CoursePlan coursePlan1 = new CoursePlan();
@@ -41,8 +38,8 @@ public class Tester {
     }
 
     public static void testAlgo3() {
-        String path = "/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/majorCourses.txt";
-        //		String path = "majorCourses.txt";
+//        String path = "/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/majorCourses.txt"; //for local usage
+        String path = "majorCourses.txt";
         CourseGraph majorGraph = new CourseGraph(path);
         CoursePlan coursePlan = new CoursePlan();
 
@@ -51,7 +48,8 @@ public class Tester {
         majorGraph.addElectives();
         majorGraph.selectCourses(coursePlan);
 
-        String foundationPath = "/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/foundations.txt";
+//        String foundationPath = "/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/foundations.txt"; //for local usage
+        String foundationPath = "foundations.txt";
         majorGraph.selectMiamiPlan(coursePlan);
         ArrayList<Course> fullMP = majorGraph.getMiamiPlan();
         ArrayList<Course> selectedMP = majorGraph.getAllSelectedMP();
@@ -74,8 +72,8 @@ public class Tester {
     }
 
     public static void testAlgo1() {
-        String path = "/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/majorCourses.txt";
-//		String path = "majorCourses.txt";
+//        String path = "/Users/buihq/Desktop/Huy Bui/IntelliJ/Course-Plan-Recommender/CoursePlanRecommender/majorCourses.txt"; //for local usage
+		String path = "majorCourses.txt";
         CourseGraph majorGraph = new CourseGraph(path);
 
         System.out.println("\n\n=========== TESTING ALGO 1: ===========\n");
